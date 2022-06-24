@@ -1,3 +1,4 @@
-import { hello } from "./hello"
+import convertJsonToCsv from "./convertJsonToCsv"
 
-hello()
+const jsonInput = document.getElementById("jsonInput")
+jsonInput?.addEventListener("input", e => convertJsonToCsv(e))
