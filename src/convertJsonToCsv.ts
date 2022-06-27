@@ -15,9 +15,11 @@ const checkJsonFormat = (pastedValue: string) => {
 
       const result = Array.isArray(json)
         ? json.map((item: UnknownObject) => reformatNestedValues(item))
-        : reformatNestedValues(json)
-      console.log(result)
-    } catch {
+        : [reformatNestedValues(json)]
+
+      return result
+    } catch (err) {
+      console.log(err)
       return null
     }
   }
