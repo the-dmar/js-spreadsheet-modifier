@@ -4,8 +4,22 @@ interface UnknownObject {
 
 const convertJsonToCsv = (e: Event) => {
   const pastedValue = (e.target as HTMLTextAreaElement).value
-  const jsonWithNestedValuesAsStrings =
-    pastedValue && checkJsonFormat(pastedValue)
+
+  const jsonWithNestedValuesAsStrings = checkJsonFormat(pastedValue)
+
+  const uniqueHeaders = jsonWithNestedValuesAsStrings && [
+    ...new Set(...jsonWithNestedValuesAsStrings.map(obj => Object.keys(obj))),
+  ]
+
+  const csv =
+    jsonWithNestedValuesAsStrings &&
+    uniqueHeaders &&
+    jsonWithNestedValuesAsStrings
+      .map(obj => Object.values(obj).join(","))
+      .join("n")
+
+  if (csv) return csv
+  else return null
 }
 
 const checkJsonFormat = (pastedValue: string) => {
