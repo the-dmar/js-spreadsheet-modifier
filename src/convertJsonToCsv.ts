@@ -7,19 +7,20 @@ const convertJsonToCsv = (e: Event) => {
 
   const jsonWithNestedValuesAsStrings = checkJsonFormat(pastedValue)
 
-  const uniqueHeaders = jsonWithNestedValuesAsStrings && [
-    ...new Set(...jsonWithNestedValuesAsStrings.map(obj => Object.keys(obj))),
-  ]
+  if (jsonWithNestedValuesAsStrings) {
+    const csvBody = jsonWithNestedValuesAsStrings.map((obj: any) =>
+      Object.values(obj)
+    )
+    const headers = [
+      ...new Set(
+        ...jsonWithNestedValuesAsStrings.map((obj: any) => Object.keys(obj))
+      ),
+    ]
 
-  const csv =
-    jsonWithNestedValuesAsStrings &&
-    uniqueHeaders &&
-    jsonWithNestedValuesAsStrings
-      .map(obj => Object.values(obj).join(","))
-      .join("n")
-
-  if (csv) return csv
-  else return null
+    const csv = [headers, ...csvBody].map(row => row.join(",")).join("\n")
+    if (csv) return csv
+    else return null
+  }
 }
 
 const checkJsonFormat = (pastedValue: string) => {
