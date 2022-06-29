@@ -42,8 +42,18 @@ const checkJsonFormat = (pastedValue: string) => {
 
 const reformatNestedValues = (jsonObject: UnknownObject) => {
   Object.keys(jsonObject).forEach(key => {
-    if (typeof jsonObject[key] === "object") {
+    if (
+      typeof jsonObject[key] === "object" &&
+      !Array.isArray(jsonObject[key])
+    ) {
       jsonObject = { ...jsonObject, [key]: JSON.stringify(jsonObject[key]) }
+    }
+
+    if (Array.isArray(jsonObject[key])) {
+      jsonObject = {
+        ...jsonObject,
+        [key]: JSON.stringify(jsonObject[key].join(",")),
+      }
     } else return jsonObject[key]
   })
 
