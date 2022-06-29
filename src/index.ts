@@ -16,3 +16,12 @@ downloadButton?.addEventListener("click", () => {
 
   csv && downloadCsv(csv, filename)
 })
+
+const uploadButton = document.getElementById("file") as HTMLInputElement
+uploadButton?.addEventListener("change", () => {
+  const reader = new FileReader()
+  reader.onload = () => {
+    console.log(reader.result)
+  }
+  uploadButton.files && reader.readAsText(uploadButton.files[0])
+})
