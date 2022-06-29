@@ -1,3 +1,4 @@
+import convertCsvToJson from "./convertCsvToJson"
 import convertJsonToCsv from "./convertJsonToCsv"
 import downloadCsv from "./downloadCsv"
 
@@ -21,7 +22,12 @@ const uploadButton = document.getElementById("file") as HTMLInputElement
 uploadButton?.addEventListener("change", () => {
   const reader = new FileReader()
   reader.onload = () => {
-    console.log(reader.result)
+    const csv = reader.result
+    if (typeof csv === "string") {
+      const generatedJson = convertCsvToJson(csv)
+      const jsonOutput = document.getElementById("jsonOutput") as HTMLPreElement
+      jsonOutput.textContent = JSON.stringify(generatedJson, null, 2)
+    }
   }
   uploadButton.files && reader.readAsText(uploadButton.files[0])
 })
