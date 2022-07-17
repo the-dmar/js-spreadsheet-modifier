@@ -9,9 +9,9 @@ import sample from "../data/sample"
 type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
 
 const Home = () => {
-  const [uploadedData, setUploadedData] = useState<UnknownJSON>(sample)
-
-  const uploadRef = useRef<HTMLInputElement>()
+  const [sheetData, setSheetData] = useState<UnknownJSON>(sample)
+  const [previousSheetData, setPreviousSheetData] =
+    useState<UnknownJSON>(sample)
 
   const uploadHandler = async (files: FileList | null) => {
     const uploadedFile = files && files[0]
@@ -21,7 +21,7 @@ const Home = () => {
     if (fileName) {
       if (fileName.includes(".xlsx")) {
         const xlsxFile = await readXlsxFile(uploadedFile)
-        setUploadedData(convertXlsxToJson(xlsxFile))
+        setSheetData(convertXlsxToJson(xlsxFile))
       } else {
         const reader = new FileReader()
         reader.readAsText(uploadedFile)
@@ -29,7 +29,7 @@ const Home = () => {
           const loadedFile = reader.result
           const csv =
             typeof loadedFile === "string" &&
-            setUploadedData(convertCsvToJson(loadedFile))
+            setSheetData(convertCsvToJson(loadedFile))
         }
       }
     }
@@ -37,22 +37,26 @@ const Home = () => {
 
   const modifyUploadedData = (userGeneratedCode: string) => {
     const dataModifierFunctionBody = `
-      const data = ${JSON.stringify(uploadedData)}
+      const data = ${JSON.stringify(sheetData)}
 
       ${userGeneratedCode}
     `
 
     const dataModifierFunction = new Function(dataModifierFunctionBody)
     const newData = dataModifierFunction()
-    setUploadedData(newData)
+    setPreviousSheetData(sheetData)
+    setSheetData(newData)
   }
+
+  const undoLastChange = () => setSheetData(previousSheetData)
 
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <input type="file" onChange={e => uploadHandler(e.target.files)} />
+      <button onClick={undoLastChange}>Undo</button>
       <div style={{ display: "flex" }}></div>
       <JSONEditor modifyUploadedData={modifyUploadedData} />
-      <JSONPreview json={JSON.stringify(uploadedData, null, 2)} />
+      <JSONPreview json={JSON.stringify(sheetData, null, 2)} />
     </div>
   )
 }
