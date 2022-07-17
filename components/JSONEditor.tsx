@@ -1,7 +1,6 @@
 import { useRef } from "react"
-import Editor, { Monaco, OnMount } from "@monaco-editor/react"
-
-type IStandaloneCodeEditor = Parameters<OnMount>[0]
+import Editor, { OnMount } from "@monaco-editor/react"
+import { IStandaloneCodeEditor } from "../types/monaco"
 
 interface JSONEditorProps {
   modifyUploadedData: (code: string) => void
