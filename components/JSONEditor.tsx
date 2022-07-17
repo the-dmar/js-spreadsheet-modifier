@@ -1,20 +1,34 @@
-import { MutableRefObject, useRef } from "react"
+import { useRef } from "react"
 import Editor, { Monaco, OnMount } from "@monaco-editor/react"
 
-const JSONEditor = () => {
-  let editorRef = useRef<Monaco|null>(null)
+type IStandaloneCodeEditor = Parameters<OnMount>[0]
 
-  const handleEditorDidMount: OnMount = (editor, monaco) => {
-    editorRef && editorRef?.current = editor
+interface JSONEditorProps {
+  modifyUploadedData: (code: string) => void
+}
+
+const JSONEditor = ({ modifyUploadedData }: JSONEditorProps) => {
+  let editorRef = useRef<IStandaloneCodeEditor | null>(null)
+
+  const handleEditorDidMount: OnMount = editor => {
+    editorRef.current = editor
+  }
+
+  const runUserGeneratedCode = () => {
+    const editorValue = editorRef.current?.getValue()
+    editorValue && modifyUploadedData(editorValue)
   }
 
   return (
-    <Editor
-      height="90vh"
-      defaultLanguage="json"
-      theme="vs-dark"
-      onMount={handleEditorDidMount}
-    />
+    <>
+      <button onClick={runUserGeneratedCode}>Run</button>
+      <Editor
+        height="90vh"
+        defaultLanguage="javascript"
+        theme="vs-dark"
+        onMount={handleEditorDidMount}
+      />
+    </>
   )
 }
 

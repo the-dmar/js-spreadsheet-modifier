@@ -35,11 +35,23 @@ const Home = () => {
     }
   }
 
+  const modifyUploadedData = (userGeneratedCode: string) => {
+    const dataModifierFunctionBody = `
+      const data = ${JSON.stringify(uploadedData)}
+
+      ${userGeneratedCode}
+    `
+
+    const dataModifierFunction = new Function(dataModifierFunctionBody)
+    const newData = dataModifierFunction()
+    setUploadedData(newData)
+  }
+
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <input type="file" onChange={e => uploadHandler(e.target.files)} />
       <div style={{ display: "flex" }}></div>
-      <JSONEditor />
+      <JSONEditor modifyUploadedData={modifyUploadedData} />
       <JSONPreview json={JSON.stringify(uploadedData, null, 2)} />
     </div>
   )
