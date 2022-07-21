@@ -1,4 +1,5 @@
 import { UnknownJSON } from "../pages"
+import { Sheet, Row, Cell } from "../styles/SheetPreview.styled"
 
 interface SheetPreviewProps {
   sheetData: { [key: string]: any }[]
@@ -12,7 +13,17 @@ const SheetPreview = ({ sheetData }: SheetPreviewProps) => {
     })
   )
 
-  return <div>{cellValues.map(row => row.map(cell => <div>{cell}</div>))}</div>
+  return (
+    <Sheet>
+      {cellValues.map(row => (
+        <Row>
+          {row.map(cell => (
+            <Cell>{cell}</Cell>
+          ))}
+        </Row>
+      ))}
+    </Sheet>
+  )
 }
 
 export default SheetPreview
