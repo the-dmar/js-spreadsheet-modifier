@@ -5,8 +5,9 @@ import JSONPreview from "../components/JSONPreview"
 import convertCsvToJson from "../utils/convertCsvToJson"
 import { convertXlsxToJson } from "../utils/convertXlsxToJson"
 import sample from "../data/sample"
+import SheetPreview from "../components/SheetPreview"
 
-type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
+export type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
 
 const Home = () => {
   const [sheetData, setSheetData] = useState<UnknownJSON>(sample)
@@ -57,6 +58,9 @@ const Home = () => {
       <div style={{ display: "flex" }}></div>
       <JSONEditor modifyUploadedData={modifyUploadedData} />
       <JSONPreview json={JSON.stringify(sheetData, null, 2)} />
+      <SheetPreview
+        sheetData={Array.isArray(sheetData) ? sheetData : [sheetData]}
+      />
     </div>
   )
 }
