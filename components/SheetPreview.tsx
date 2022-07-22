@@ -19,7 +19,9 @@ const SheetPreview = ({ sheetData }: SheetPreviewProps) => {
       {cellValues.map(row => (
         <Row key={`row${row}`}>
           {row.map((cell, i) => (
-            <Cell key={`${row}${i}`}>{cell}</Cell>
+            <Cell key={`${row}${i}`}>
+              {typeof cell === "string" ? cell : JSON.stringify(cell)}
+            </Cell>
           ))}
         </Row>
       ))}

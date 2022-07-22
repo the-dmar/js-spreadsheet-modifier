@@ -11,6 +11,8 @@ import {
   EditorLeftSide,
   EditorWrapper,
   FileInput,
+  FileInputStyler,
+  InvisibleFileInput,
 } from "../styles/Index.styled"
 import { FaUndo } from "react-icons/fa"
 import { IconContext } from "react-icons"
@@ -36,8 +38,7 @@ const Home = () => {
         reader.readAsText(uploadedFile)
         reader.onload = () => {
           const loadedFile = reader.result
-          const csv =
-            typeof loadedFile === "string" &&
+          typeof loadedFile === "string" &&
             setSheetData(convertCsvToJson(loadedFile))
         }
       }
@@ -51,11 +52,8 @@ const Home = () => {
       ${userGeneratedCode}
     `
 
-    console.log({ dataModifierFunctionBody })
     const dataModifierFunction = new Function(dataModifierFunctionBody)
-    console.log({ dataModifierFunction })
     const newData = dataModifierFunction()
-    console.log({ newData })
     setPreviousSheetData(sheetData)
     setSheetData(newData)
   }
@@ -64,8 +62,12 @@ const Home = () => {
 
   return (
     <Container>
-      <FileInput type="file" onChange={e => uploadHandler(e.target.files)} />
-      {/* <input type="file" onChange={e => uploadHandler(e.target.files)} /> */}
+      <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
+      <InvisibleFileInput
+        type="file"
+        id="file"
+        onChange={e => uploadHandler(e.target.files)}
+      />
       <IconContext.Provider value={{ size: 22 }}>
         <FaUndo onClick={undoLastChange} style={{ cursor: "pointer" }} />
       </IconContext.Provider>

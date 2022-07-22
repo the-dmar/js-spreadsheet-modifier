@@ -16,4 +16,5 @@ export const Cell = styled.div`
   font-family: calibri;
   padding: 0.1rem 0.2rem;
   overflow: hidden;
+  background-color: white;
 `

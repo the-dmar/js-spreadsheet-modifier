@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import Editor, { OnMount } from "@monaco-editor/react"
+import Editor, { Monaco, OnMount } from "@monaco-editor/react"
 import { IStandaloneCodeEditor } from "../types/monaco"
 import { FaPlay } from "react-icons/fa"
 import { IconContext } from "react-icons"
@@ -11,7 +11,7 @@ interface JSONEditorProps {
 const JSONEditor = ({ modifyUploadedData }: JSONEditorProps) => {
   let editorRef = useRef<IStandaloneCodeEditor | null>(null)
 
-  const handleEditorDidMount: OnMount = editor => {
+  const handleEditorDidMount: OnMount = (editor, monaco) => {
     editorRef.current = editor
   }
 
@@ -29,7 +29,7 @@ const JSONEditor = ({ modifyUploadedData }: JSONEditorProps) => {
       <Editor
         height="60vh"
         defaultLanguage="javascript"
-        theme="vs-dark"
+        theme="my-theme"
         onMount={handleEditorDidMount}
       />
     </>

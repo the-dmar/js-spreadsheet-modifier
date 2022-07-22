@@ -16,10 +16,17 @@ export const EditorLeftSide = styled.div`
   flex: 1;
 `
 
-export const FileInput = styled.input`
-  outline: transparent;
-  border: none;
-  background-color: green;
+export const InvisibleFileInput = styled.input`
+  display: none;
+`
+
+export const FileInputStyler = styled.label`
+  background-color: #fb8500;
+  max-width: 8.5rem;
+  text-align: center;
+  padding: 0.7rem;
+  border-radius: 4px;
   color: white;
-  align-self: center;
+  font-weight: 600;
+  cursor: pointer;
 `
