@@ -10,7 +10,10 @@ import {
   Container,
   EditorLeftSide,
   EditorWrapper,
+  FileInput,
 } from "../styles/Index.styled"
+import { FaUndo } from "react-icons/fa"
+import { IconContext } from "react-icons"
 
 export type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
 
@@ -48,8 +51,11 @@ const Home = () => {
       ${userGeneratedCode}
     `
 
+    console.log({ dataModifierFunctionBody })
     const dataModifierFunction = new Function(dataModifierFunctionBody)
+    console.log({ dataModifierFunction })
     const newData = dataModifierFunction()
+    console.log({ newData })
     setPreviousSheetData(sheetData)
     setSheetData(newData)
   }
@@ -58,8 +64,11 @@ const Home = () => {
 
   return (
     <Container>
-      <input type="file" onChange={e => uploadHandler(e.target.files)} />
-      <button onClick={undoLastChange}>Undo</button>
+      <FileInput type="file" onChange={e => uploadHandler(e.target.files)} />
+      {/* <input type="file" onChange={e => uploadHandler(e.target.files)} /> */}
+      <IconContext.Provider value={{ size: 22 }}>
+        <FaUndo onClick={undoLastChange} style={{ cursor: "pointer" }} />
+      </IconContext.Provider>
       <EditorWrapper>
         <JSONEditor modifyUploadedData={modifyUploadedData} />
         <JSONPreview json={JSON.stringify(sheetData, null, 2)} />

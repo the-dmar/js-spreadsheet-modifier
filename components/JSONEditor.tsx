@@ -1,6 +1,8 @@
 import { useRef } from "react"
 import Editor, { OnMount } from "@monaco-editor/react"
 import { IStandaloneCodeEditor } from "../types/monaco"
+import { FaPlay } from "react-icons/fa"
+import { IconContext } from "react-icons"
 
 interface JSONEditorProps {
   modifyUploadedData: (code: string) => void
@@ -20,7 +22,10 @@ const JSONEditor = ({ modifyUploadedData }: JSONEditorProps) => {
 
   return (
     <>
-      <button onClick={runUserGeneratedCode}>Run</button>
+      <IconContext.Provider value={{ size: 28 }}>
+        <FaPlay onClick={runUserGeneratedCode} style={{ cursor: "pointer" }} />
+      </IconContext.Provider>
+
       <Editor
         height="60vh"
         defaultLanguage="javascript"

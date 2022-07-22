@@ -16,7 +16,6 @@ const JSONPreview = ({ json }: any) => {
 
   return (
     <>
-      <button onClick={copyJson}>Copy</button>
       <Editor
         height="60vh"
         width="30vw"

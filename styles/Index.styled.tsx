@@ -15,3 +15,11 @@ export const EditorLeftSide = styled.div`
   flex-direction: column;
   flex: 1;
 `
+
+export const FileInput = styled.input`
+  outline: transparent;
+  border: none;
+  background-color: green;
+  color: white;
+  align-self: center;
+`
