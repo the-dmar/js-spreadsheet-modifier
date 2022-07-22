@@ -6,6 +6,11 @@ import convertCsvToJson from "../utils/convertCsvToJson"
 import { convertXlsxToJson } from "../utils/convertXlsxToJson"
 import sample from "../data/sample"
 import SheetPreview from "../components/SheetPreview"
+import {
+  Container,
+  EditorLeftSide,
+  EditorWrapper,
+} from "../styles/Index.styled"
 
 export type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
 
@@ -52,16 +57,17 @@ const Home = () => {
   const undoLastChange = () => setSheetData(previousSheetData)
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
+    <Container>
       <input type="file" onChange={e => uploadHandler(e.target.files)} />
       <button onClick={undoLastChange}>Undo</button>
-      <div style={{ display: "flex" }}></div>
-      <JSONEditor modifyUploadedData={modifyUploadedData} />
-      <JSONPreview json={JSON.stringify(sheetData, null, 2)} />
+      <EditorWrapper>
+        <JSONEditor modifyUploadedData={modifyUploadedData} />
+        <JSONPreview json={JSON.stringify(sheetData, null, 2)} />
+      </EditorWrapper>
       <SheetPreview
         sheetData={Array.isArray(sheetData) ? sheetData : [sheetData]}
       />
-    </div>
+    </Container>
   )
 }
 

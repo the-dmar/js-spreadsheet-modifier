@@ -18,7 +18,8 @@ const JSONPreview = ({ json }: any) => {
     <>
       <button onClick={copyJson}>Copy</button>
       <Editor
-        height="90vh"
+        height="60vh"
+        width="30vw"
         defaultLanguage="json"
         theme="vs-dark"
         value={json}

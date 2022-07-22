@@ -22,7 +22,7 @@ const JSONEditor = ({ modifyUploadedData }: JSONEditorProps) => {
     <>
       <button onClick={runUserGeneratedCode}>Run</button>
       <Editor
-        height="90vh"
+        height="60vh"
         defaultLanguage="javascript"
         theme="vs-dark"
         onMount={handleEditorDidMount}
