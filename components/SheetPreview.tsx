@@ -8,7 +8,9 @@ const SheetPreview = ({ sheetData }: SheetPreviewProps) => {
   const cellValues = sheetData.map((row, rowIndex) =>
     row.flatMap((obj: object) => {
       if (rowIndex === 0) return Object.keys(obj)
-      else return Object.values(obj)
+      else {
+        return Object.values(obj)
+      }
     })
   )
 
@@ -16,8 +18,8 @@ const SheetPreview = ({ sheetData }: SheetPreviewProps) => {
     <Sheet>
       {cellValues.map(row => (
         <Row key={`row${row}`}>
-          {row.map(cell => (
-            <Cell key={`${row}${cell}`}>{cell}</Cell>
+          {row.map((cell, i) => (
+            <Cell key={`${row}${i}`}>{cell}</Cell>
           ))}
         </Row>
       ))}

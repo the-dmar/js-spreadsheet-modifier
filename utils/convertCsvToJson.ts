@@ -8,12 +8,14 @@ const convertCsvToJson = (csvString: string) => {
     .map((row, rowIndex) => {
       if (rowIndex >= 1) {
         return row.map((el, columnIndex) => {
-          return { [csv[0][columnIndex]]: el }
+          const key = JSON.parse(csv[0][columnIndex])
+          return { [key]: JSON.parse(el) }
         })
       }
     })
     .filter(el => el)
 
+  console.log(json)
   return json
 }
 
