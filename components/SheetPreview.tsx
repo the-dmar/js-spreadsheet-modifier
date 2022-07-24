@@ -53,10 +53,10 @@ const SheetPreview = ({ sheetData }: SheetPreviewProps) => {
   return (
     <Sheet>
       {Array.isArray(resizedsheetData) &&
-        resizedsheetData.map(row => (
-          <Row key={`row${row}`}>
-            {row.map((cell, i) => (
-              <Cell key={`${row}${i}`}>
+        resizedsheetData.map((row, rowIndex) => (
+          <Row key={`${rowIndex}`}>
+            {row.map((cell, columnIndex) => (
+              <Cell key={`${rowIndex}${columnIndex}`}>
                 {typeof cell === "string" ? cell : JSON.stringify(cell)}
               </Cell>
             ))}
