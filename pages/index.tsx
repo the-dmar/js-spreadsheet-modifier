@@ -8,14 +8,16 @@ import sample from "../data/sample"
 import SheetPreview from "../components/SheetPreview"
 import {
   Container,
-  EditorLeftSide,
   EditorWrapper,
-  FileInput,
   FileInputStyler,
   InvisibleFileInput,
 } from "../styles/Index.styled"
 import { FaUndo } from "react-icons/fa"
 import { IconContext } from "react-icons"
+import downloadCsvBtn from "../assets/downloadCsvBtn.svg"
+import downloadXlsxBtn from "../assets/downloadXlsxBtn.svg"
+import Image from "next/image"
+import DownloadButton from "../components/DownloadButton"
 
 export type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
 
@@ -62,6 +64,8 @@ const Home = () => {
 
   return (
     <Container>
+      <DownloadButton sheetData={sheetData} label="CSV" />
+      <DownloadButton sheetData={sheetData} label="XLSX" />
       <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
       <InvisibleFileInput
         type="file"

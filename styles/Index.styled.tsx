@@ -29,4 +29,5 @@ export const FileInputStyler = styled.label`
   color: white;
   font-weight: 600;
   cursor: pointer;
+  font-size: 0.8rem;
 `
