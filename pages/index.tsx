@@ -11,6 +11,8 @@ import {
   EditorWrapper,
   FileInputStyler,
   InvisibleFileInput,
+  FileInputTypes,
+  ButtonWrapper,
 } from "../styles/Index.styled"
 import { FaUndo } from "react-icons/fa"
 import { IconContext } from "react-icons"
@@ -64,16 +66,18 @@ const Home = () => {
 
   return (
     <Container>
-      <DownloadButton sheetData={sheetData} label="Export" />
-      <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
-      <InvisibleFileInput
-        type="file"
-        id="file"
-        onChange={e => uploadHandler(e.target.files)}
-      />
-      <IconContext.Provider value={{ size: 22 }}>
-        <FaUndo onClick={undoLastChange} style={{ cursor: "pointer" }} />
-      </IconContext.Provider>
+      <ButtonWrapper>
+        <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
+        <InvisibleFileInput
+          type="file"
+          id="file"
+          onChange={e => uploadHandler(e.target.files)}
+        />
+        <IconContext.Provider value={{ size: 22 }}>
+          <FaUndo onClick={undoLastChange} style={{ cursor: "pointer" }} />
+        </IconContext.Provider>
+        <DownloadButton sheetData={sheetData} label="Export" />
+      </ButtonWrapper>
       <EditorWrapper>
         <JSONEditor modifyUploadedData={modifyUploadedData} />
         <JSONPreview json={JSON.stringify(sheetData, null, 2)} />

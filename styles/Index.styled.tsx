@@ -21,13 +21,26 @@ export const InvisibleFileInput = styled.input`
 `
 
 export const FileInputStyler = styled.label`
-  background-color: #fb8500;
-  max-width: 8.5rem;
+  background-color: #6c757d;
+  max-width: 8rem;
   text-align: center;
-  padding: 0.7rem;
+  padding: 0.4rem 0.7rem;
   border-radius: 4px;
   color: white;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  font-size: 0.8rem;
+  align-items: center;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-evenly;
+`
+export const FileInputTypes = styled.i`
+  margin-top: 0.1rem;
+  font-size: 0.7rem;
+  font-weight: 400;
+`
+
+export const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
 `
