@@ -64,8 +64,7 @@ const Home = () => {
 
   return (
     <Container>
-      <DownloadButton sheetData={sheetData} label="CSV" />
-      <DownloadButton sheetData={sheetData} label="XLSX" />
+      <DownloadButton sheetData={sheetData} label="Export" />
       <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
       <InvisibleFileInput
         type="file"
