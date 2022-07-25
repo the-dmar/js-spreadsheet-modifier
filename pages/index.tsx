@@ -13,6 +13,8 @@ import {
   InvisibleFileInput,
   FileInputTypes,
   ButtonWrapper,
+  IconWrapper,
+  IconWrapperLabel,
 } from "../styles/Index.styled"
 import { FaUndo } from "react-icons/fa"
 import DownloadButton from "../components/DownloadButton"
@@ -72,22 +74,26 @@ const Home = () => {
   return (
     <Container>
       <ButtonWrapper>
-        <IconContext.Provider value={{ size: 28 }}>
-          <FaPlay
-            onClick={runUserGeneratedCode}
-            style={{ cursor: "pointer" }}
-          />
-        </IconContext.Provider>
-        <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
         <InvisibleFileInput
           type="file"
           id="file"
           onChange={e => uploadHandler(e.target.files)}
         />
-        <IconContext.Provider value={{ size: 22 }}>
-          <FaUndo onClick={undoLastChange} style={{ cursor: "pointer" }} />
-        </IconContext.Provider>
-        <DownloadButton sheetData={sheetData} label="Export" />
+
+        <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
+        <IconWrapper onClick={runUserGeneratedCode}>
+          <IconContext.Provider value={{ size: 17, color: "white" }}>
+            <FaPlay />
+          </IconContext.Provider>
+          <IconWrapperLabel>Run</IconWrapperLabel>
+        </IconWrapper>
+        <IconWrapper onClick={undoLastChange}>
+          <IconContext.Provider value={{ size: 16, color: "white" }}>
+            <FaUndo />
+          </IconContext.Provider>
+          <IconWrapperLabel>Undo</IconWrapperLabel>
+        </IconWrapper>
+        <DownloadButton sheetData={sheetData} label="Download" />
       </ButtonWrapper>
       <EditorWrapper>
         <JSONEditor editorValueHandler={editorValueHandler} />

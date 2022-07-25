@@ -6,6 +6,7 @@ export const DownloadButtonContainer = styled.div`
   align-items: flex-end;
   cursor: pointer;
   margin-left: auto;
+  padding-right: 1rem;
 `
 
 export const DownloadButtonLabel = styled.div`
