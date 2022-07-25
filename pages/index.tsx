@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useRef, useState, useEffect } from "react"
 import readXlsxFile from "read-excel-file"
 import JSONEditor from "../components/JSONEditor"
 import JSONPreview from "../components/JSONPreview"
@@ -15,11 +15,9 @@ import {
   ButtonWrapper,
 } from "../styles/Index.styled"
 import { FaUndo } from "react-icons/fa"
-import { IconContext } from "react-icons"
-import downloadCsvBtn from "../assets/downloadCsvBtn.svg"
-import downloadXlsxBtn from "../assets/downloadXlsxBtn.svg"
-import Image from "next/image"
 import DownloadButton from "../components/DownloadButton"
+import { IconContext } from "react-icons"
+import { FaPlay } from "react-icons/fa"
 
 export type UnknownJSON = { [key: string]: any } | { [key: string]: any }[] | ""
 
@@ -27,6 +25,13 @@ const Home = () => {
   const [sheetData, setSheetData] = useState<UnknownJSON>(sample)
   const [previousSheetData, setPreviousSheetData] =
     useState<UnknownJSON>(sample)
+  const [editorValue, setEditorValue] = useState<string | null>(null)
+
+  useEffect(() => {
+    console.log(editorValue)
+  }, [editorValue])
+
+  const editorValueHandler = (newValue: string) => setEditorValue(newValue)
 
   const uploadHandler = async (files: FileList | null) => {
     const uploadedFile = files && files[0]
@@ -49,17 +54,17 @@ const Home = () => {
     }
   }
 
-  const modifyUploadedData = (userGeneratedCode: string) => {
-    const dataModifierFunctionBody = `
-      const data = ${JSON.stringify(sheetData)}
+  const runUserGeneratedCode = () => {
+    if (editorValue) {
+      const dataModifierFunctionBody = `
+        const data = ${JSON.stringify(sheetData)}
+        ${editorValue}`
 
-      ${userGeneratedCode}
-    `
-
-    const dataModifierFunction = new Function(dataModifierFunctionBody)
-    const newData = dataModifierFunction()
-    setPreviousSheetData(sheetData)
-    setSheetData(newData)
+      const dataModifierFunction = new Function(dataModifierFunctionBody)
+      const newData = dataModifierFunction()
+      setPreviousSheetData(sheetData)
+      setSheetData(newData)
+    }
   }
 
   const undoLastChange = () => setSheetData(previousSheetData)
@@ -67,6 +72,12 @@ const Home = () => {
   return (
     <Container>
       <ButtonWrapper>
+        <IconContext.Provider value={{ size: 28 }}>
+          <FaPlay
+            onClick={runUserGeneratedCode}
+            style={{ cursor: "pointer" }}
+          />
+        </IconContext.Provider>
         <FileInputStyler htmlFor="file">Upload File</FileInputStyler>
         <InvisibleFileInput
           type="file"
@@ -79,7 +90,7 @@ const Home = () => {
         <DownloadButton sheetData={sheetData} label="Export" />
       </ButtonWrapper>
       <EditorWrapper>
-        <JSONEditor modifyUploadedData={modifyUploadedData} />
+        <JSONEditor editorValueHandler={editorValueHandler} />
         <JSONPreview json={JSON.stringify(sheetData, null, 2)} />
       </EditorWrapper>
       <SheetPreview
