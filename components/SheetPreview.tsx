@@ -10,20 +10,19 @@ const SheetPreview = ({ sheetData }: SheetPreviewProps) => {
   const [resizedsheetData, setResizedSheetData] = useState<string[][]>()
   useEffect(() => {
     resizeSheet()
-  }, [])
-
-  const cellValues = sheetData.map((row, rowIndex) =>
-    row.flatMap((obj: object) => {
-      if (rowIndex === 0) return Object.keys(obj)
-      else {
-        return Object.values(obj)
-      }
-    })
-  )
+  }, [sheetData])
 
   const resizeSheet = () => {
+    const cellValues = sheetData.map((row, rowIndex) =>
+      row.flatMap((obj: object) => {
+        if (rowIndex === 0) return Object.keys(obj)
+        else {
+          return Object.values(obj)
+        }
+      })
+    )
     const requiredColumns = screen.width / 88 - 1
-    const requiredRows = 11
+    const requiredRows = 9
     const currentRows = cellValues.length
     const currentColumns = cellValues[0].length
     const columnsToAdd =
