@@ -1,9 +1,8 @@
 import { useRef, useState, useEffect } from "react"
-import readXlsxFile from "read-excel-file"
 import JSONEditor from "../components/JSONEditor"
 import JSONPreview from "../components/JSONPreview"
 import convertCsvToJson from "../utils/convertCsvToJson"
-import { convertXlsxToJson } from "../utils/convertXlsxToJson"
+import * as xlsx from "xlsx"
 import sample from "../data/sample"
 import SheetPreview from "../components/SheetPreview"
 import {
@@ -42,8 +41,19 @@ const Home = () => {
 
     if (fileName) {
       if (fileName.includes(".xlsx")) {
-        const xlsxFile = await readXlsxFile(uploadedFile)
-        setSheetData(convertXlsxToJson(xlsxFile))
+        const reader = new FileReader()
+        reader.onload = e => {
+          const rawData = e.target?.result
+          if (rawData) {
+            const wb = xlsx.readFile(rawData)
+            const json = xlsx.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]], {
+              raw: false,
+            })
+            setSheetData(json)
+          }
+        }
+
+        reader.readAsArrayBuffer(uploadedFile)
       } else {
         const reader = new FileReader()
         reader.readAsText(uploadedFile)
@@ -99,9 +109,9 @@ const Home = () => {
         <JSONEditor editorValueHandler={editorValueHandler} />
         <JSONPreview json={JSON.stringify(sheetData, null, 2)} />
       </EditorWrapper>
-      <SheetPreview
+      {/* <SheetPreview
         sheetData={Array.isArray(sheetData) ? sheetData : [sheetData]}
-      />
+      /> */}
     </Container>
   )
 }
