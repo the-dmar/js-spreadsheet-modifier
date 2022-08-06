@@ -32,6 +32,10 @@ const Home = () => {
     console.log(editorValue)
   }, [editorValue])
 
+  useEffect(() => {
+    console.log(sheetData)
+  }, [sheetData])
+
   const editorValueHandler = (newValue: string) => setEditorValue(newValue)
 
   const uploadHandler = async (files: FileList | null) => {
